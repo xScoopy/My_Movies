@@ -5,31 +5,43 @@
     <section id="content">
         <h1>My Movies</h1>
         <form action="/" method="POST">
-        <label for="pick_genre">Please Select Your Genre</label>
-        <select name="pick_genre">
-            {% for result in results %}
+            <label for="pick_genre">Search By Genre</label>
+            <select name="pick_genre">
+                {% for result in results %}
                 <option value="{{ result.id }}">{{ result.name }}</option>
-            {% endfor %}
+                {% endfor %}
+            </select>
             <input type="submit" value="Search for Movies!">
-        </select>    
+        </form>
+        <form action="/" method="POST">
+            <label for="pick_title">Search By Title</label>
+            <input type="text" name="pick_title">
+            <input type="submit" value="Search for Movies!">
         </form>
     </section>
 </main>
 
 {% if movies %}
-<hr/>
+<hr />
 <section id="form_results">
     <p>
         Here are the most popular movies in that genre:
     </p>
-        {% for movie in movies%}
-        <section>
-            <p>Title: {{ movie.title }}</p>
-            <img src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" alt="Movie Photo Placeholder">
-            <p>Release Date: {{ movie.release_date }}</p>
-        </section>
-        {% endfor %}
-    
+    <div class="container">
+        <div class="row">
+            {% for movie in movies%}
+            <div class="col-lg-2 col-md-2 col-sm-2 card">
+                <img src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" alt="Movie Photo Placeholder"
+                    class="img-thumbnail img-card-top">
+                <div class="card-body">
+                    <p class="card-text">Title: {{ movie.title }}</p>
+                    <p class="card-text">Release Date: {{ movie.release_date }}</p>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
 </section>
 {% endif %}
 
