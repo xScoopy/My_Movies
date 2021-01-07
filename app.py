@@ -16,20 +16,34 @@ app = Flask(__name__)
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
 GENRE_URL = f'https://api.themoviedb.org/3/genre/movie/list?api_key={API_KEY}&language=en-US'
-
+MOVIE_URL = f'https://api.themoviedb.org/3/discover/movie'
 pp = PrettyPrinter(indent=4)
 @app.route('/', methods=['GET', 'POST'])
-def gif_search():
+def home_page():
     """Show a form to search for GIFs and show resulting GIFs from Tenor API."""
     if request.method == 'POST':
-        
+        genre = request.form.get('pick_genre')
+        response = requests.get(MOVIE_URL,
+        {
+            'api_key' : API_KEY, 
+            'with_genres' : genre
 
+        }
+        )
+        result = json.loads(response.content).get('results')
+        pp.pprint(result)
+        context = {
+            'movies' : result
+        }
         return render_template('home.html', **context)
     else:
         response = requests.get(GENRE_URL)
         result = json.loads(response.content).get('genres')
         #pp.pprint(result)
-        return render_template('home.html', context**)
+        context = {
+            'results' : result
+        }
+        return render_template('home.html', **context)
 
 
 
