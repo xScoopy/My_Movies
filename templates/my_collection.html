@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<main>
+    
+    <h1 class="text-center">My Collection</h1>
+    {% if movies %}
+    <hr />
+    <div class="container">
+        <div class="row">
+            {% for movie in movies %}
+            <div class="col-lg-2 col-md-2 col-sm-2 card">
+                <img src="{{movie.image}}" alt="Movie image" class="img-thumbnail img-card-top">
+                <div class="card-body">
+                    <p class="card-text text-center">{{movie.title}}</p>
+                    <p class="card-text text-center"><a href="/movie/{{movie.db_id}}">Details</a></p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+</main>
+{% endblock content %}

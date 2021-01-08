@@ -2,6 +2,9 @@
 {% block content %}
 {% if result %}
 <main>
+    {% if error_message %}
+    <h1 class="text-center">{{error_message}}</h1>
+    {% endif %}
     <div class="jumbotron text-center">
         {% if result.belongs_to_collection.backdrop_path %}
         <img src="https://image.tmdb.org/t/p/w500/{{result.belongs_to_collection.backdrop_path}}" alt="movie backdrop" class="img-fluid mr-auto">
@@ -25,14 +28,14 @@
             </div>
           </div>
     </div>
-    <form action="/my_collection" method="POST">
+    <form action="/my_collection" method="POST" class="text-center">
         <input type="hidden" name='movie_title' value='{{result.title}}'>
         <input type="hidden" name='movie_genre' value='{% for genre in result.genres %} {{genre.name}} {% endfor %}'>
         <input type="hidden" name='movie_poster' value="https://image.tmdb.org/t/p/w500/{{result.poster_path}}">
         <input type="hidden" name='movie_description' value="{{result.overview}}">
         <input type="hidden" name='movie_run' value='{{result.runtime}}'>
         <input type="hidden" name='movie_id' value='{{result.id}}'>
-        <input type="submit" value="Add to My Collection">
+        <input type="submit" value="Add to My Collection" class="text-center">
     </form>
 </main>
 {% else %}

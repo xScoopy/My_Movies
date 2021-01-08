@@ -21,11 +21,13 @@ DETAIL_URL = f'https://api.themoviedb.org/3/movie/'
 SEARCH_URL = f'https://api.themoviedb.org/3/search/movie'
 pp = PrettyPrinter(indent=4)
 MONGODB_PASSWORD = os.getenv('MONGODB_PASSWORD')
-#Mongo Connection
+# Mongo Connection
 
-client = MongoClient(f"mongodb+srv://scoopy:{MONGODB_PASSWORD}@webcluster.jdw9h.mongodb.net/mydb?retryWrites=true&w=majority")
+client = MongoClient(
+    f"mongodb+srv://scoopy:{MONGODB_PASSWORD}@webcluster.jdw9h.mongodb.net/mydb?retryWrites=true&w=majority")
 db = client.test
 # print(client.server_info())
+
 
 @app.route('/', methods=['GET', 'POST'])
 def home_page():
@@ -58,8 +60,8 @@ def home_page():
                                     })
             result = json.loads(response.content).get('results')
             context = {
-                'movies':result, 
-                'results':genre_result
+                'movies': result,
+                'results': genre_result
             }
             return render_template('home.html', **context)
     else:
@@ -71,19 +73,62 @@ def home_page():
         }
         return render_template('home.html', **context)
 
+
 @app.route('/movie/<movie_id>')
 def movie_details(movie_id):
     '''Display in-depth movie details'''
     response = requests.get(f'{DETAIL_URL}{movie_id}',
-    {
-        'api_key': API_KEY,
-        
-    })
+                            {
+                                'api_key': API_KEY,
+
+                            })
     result = json.loads(response.content)
     context = {
-        'result' :result
+        'result': result
     }
     return render_template('movie.html', **context)
+
+
+@app.route('/my_collection', methods=['GET', 'POST'])
+def my_collection():
+    '''Add a movie to the database on POST, or show all movies in db on GET'''
+    if request.method == 'POST':
+        movie_id = request.form.get('movie_id')
+        new_movie = {
+            'db_id': movie_id,
+            'title': request.form.get('movie_title'),
+            'genres': request.form.get('movie_genre'),
+            'image': request.form.get('movie_poster'),
+            'runtime': request.form.get('movie_run'),
+            'description': request.form.get('movie_description')
+        }
+        check_movie = db.movies.find_one({'db_id': movie_id})
+        if not check_movie:
+            db.movies.insert_one(new_movie)
+            result = db.movies.find()
+            context = {
+                'movies': result
+            }
+            return render_template('my_collection.html', **context)
+        else:
+            response = requests.get(f'{DETAIL_URL}{movie_id}',
+                                    {
+                                        'api_key': API_KEY,
+
+                                    })
+            result = json.loads(response.content)
+            context =   {
+                        'error_message': "This movie is already in your collection.",
+                        'result' : result
+                        }
+            return render_template('movie.html', **context, movie_id=movie_id)
+    else: 
+        result = db.movies.find()
+        context = {
+            'movies': result
+        }
+        return render_template('my_collection.html', **context)
+
 
 if __name__ == '__main__':
     app.config['ENV'] = 'development'
