@@ -2,12 +2,16 @@ bson==0.5.10
 certifi==2020.12.5
 chardet==4.0.0
 click==7.1.2
+colorful==0.5.4
+dnspython==2.1.0
 Flask==1.1.2
 Flask-PyMongo==2.3.0
 idna==2.10
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
+prettyprinter==0.18.0
+Pygments==2.7.3
 pymongo==3.11.2
 python-dateutil==2.8.1
 python-dotenv==0.15.0

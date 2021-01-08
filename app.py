@@ -20,7 +20,12 @@ MOVIE_URL = f'https://api.themoviedb.org/3/discover/movie'
 DETAIL_URL = f'https://api.themoviedb.org/3/movie/'
 SEARCH_URL = f'https://api.themoviedb.org/3/search/movie'
 pp = PrettyPrinter(indent=4)
+MONGODB_PASSWORD = os.getenv('MONGODB_PASSWORD')
+#Mongo Connection
 
+client = MongoClient(f"mongodb+srv://scoopy:{MONGODB_PASSWORD}@webcluster.jdw9h.mongodb.net/mydb?retryWrites=true&w=majority")
+db = client.test
+# print(client.server_info())
 
 @app.route('/', methods=['GET', 'POST'])
 def home_page():

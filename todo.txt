@@ -1,0 +1,11 @@
+Friday
+-Save to my collection
+    Button on Movie detail page > POST hidden form data
+        > add hidden form fields to Movie detail page, prepopulated
+
+
+-view my collection
+    view all on load of page. 
+    
+-delete items from collection
+    -

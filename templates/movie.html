@@ -25,6 +25,15 @@
             </div>
           </div>
     </div>
+    <form action="/my_collection" method="POST">
+        <input type="hidden" name='movie_title' value='{{result.title}}'>
+        <input type="hidden" name='movie_genre' value='{% for genre in result.genres %} {{genre.name}} {% endfor %}'>
+        <input type="hidden" name='movie_poster' value="https://image.tmdb.org/t/p/w500/{{result.poster_path}}">
+        <input type="hidden" name='movie_description' value="{{result.overview}}">
+        <input type="hidden" name='movie_run' value='{{result.runtime}}'>
+        <input type="hidden" name='movie_id' value='{{result.id}}'>
+        <input type="submit" value="Add to My Collection">
+    </form>
 </main>
 {% else %}
 <p>Please click a movie's details from the Home screen.</p>
