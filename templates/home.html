@@ -2,37 +2,43 @@
 {% block content %}
 
 <main>
-    <section id="content">
-        <h1>My Movies</h1>
-        <form action="/" method="POST">
-            <label for="pick_genre">Search By Genre</label>
-            <select name="pick_genre">
-                {% for result in results %}
-                <option value="{{ result.id }}">{{ result.name }}</option>
-                {% endfor %}
-            </select>
-            <input type="submit" value="Search for Movies!">
-        </form>
-        <form action="/" method="POST">
-            <label for="pick_title">Search By Title</label>
-            <input type="text" name="pick_title">
-            <input type="submit" value="Search for Movies!">
-        </form>
-    </section>
+    <h1>My Movies</h1>
+    <div class="container">
+        <div class="row">
+
+            <form action="/" method="POST">
+                <label for="pick_genre">Search By Genre</label>
+                <select name="pick_genre">
+                    {% for result in results %}
+                    <option value="{{ result.id }}">{{ result.name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Search for Movies!">
+            </form>
+            <p>OR</p>
+            <form action="/" method="POST">
+                <label for="pick_title">Search By Title</label>
+                <input type="text" name="pick_title">
+                <input type="submit" value="Search for Movies!">
+            </form>
+            </section>
+        </div>
+    </div>
 </main>
 
 {% if movies %}
 <hr />
 <section id="form_results">
-    <p>
-        Here are the most popular movies in that genre:
-    </p>
     <div class="container">
         <div class="row">
             {% for movie in movies%}
             <div class="col-lg-2 col-md-2 col-sm-2 card">
+                {% if movie.poster_path %}
                 <img src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" alt="Movie Photo Placeholder"
                     class="img-thumbnail img-card-top">
+                {% else %}
+                <img src="{{url_for('static', filename='no_image.jpg')}}"alt="Image Replacement">
+                {% endif %}
                 <div class="card-body">
                     <p class="card-text">Title: {{ movie.title }}</p>
                     <p class="card-text">Release Date: {{ movie.release_date }}</p>
@@ -44,6 +50,8 @@
         </div>
     </div>
 </section>
+{% else %}
+<h3 class="text-center mt-5">Your search results will show up here. Please choose a genre OR enter a title.</h3>
 {% endif %}
 
 {% endblock content %}

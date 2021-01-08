@@ -3,22 +3,13 @@
 {% if result %}
 <main>
     <div class="jumbotron text-center">
+        {% if result.belongs_to_collection.backdrop_path %}
         <img src="https://image.tmdb.org/t/p/w500/{{result.belongs_to_collection.backdrop_path}}" alt="movie backdrop" class="img-fluid mr-auto">
+        {% else %}
+        <img src="{{url_for('static', filename='no_image.jpg')}}"alt="Image Replacement">
+        {% endif %}
     </div>
     <div class="container">
-        <!-- <div class="row">
-            <h1 class='col-12 text-center'>{{result.title}}</h1>
-            <h4 class='m-2'>Genres:</h4>
-            <ul class='m-4'>
-                {% for genre in result.genres %}
-                <li>{{genre.name}}</li>
-                {% endfor %}
-            </ul>
-            <a href="{{result.homepage}}" class='m-4'>Movie HomePage</a>
-            <p class='m-4'>Description: {{result.overview}}</p>
-            <p class='m-4'>Release Date: {{result.release_date}}</p>
-            <p class='m-4'>Runtime: {{result.runtime}} min.</p>
-        </div> -->
         <div class="card text-center">
             <div class="card-header">
                 {% for genre in result.genres %} {{genre.name}} {% endfor %}
