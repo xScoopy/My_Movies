@@ -17,6 +17,7 @@ load_dotenv()
 API_KEY = os.getenv('API_KEY')
 GENRE_URL = f'https://api.themoviedb.org/3/genre/movie/list?api_key={API_KEY}&language=en-US'
 MOVIE_URL = f'https://api.themoviedb.org/3/discover/movie'
+DETAIL_URL = f'https://api.themoviedb.org/3/movie/'
 SEARCH_URL = f'https://api.themoviedb.org/3/search/movie'
 pp = PrettyPrinter(indent=4)
 
@@ -65,6 +66,19 @@ def home_page():
         }
         return render_template('home.html', **context)
 
+@app.route('/movie/<movie_id>')
+def movie_details(movie_id):
+    '''Display in-depth movie details'''
+    response = requests.get(f'{DETAIL_URL}{movie_id}',
+    {
+        'api_key': API_KEY,
+        
+    })
+    result = json.loads(response.content)
+    context = {
+        'result' :result
+    }
+    return render_template('movie.html', **context)
 
 if __name__ == '__main__':
     app.config['ENV'] = 'development'
