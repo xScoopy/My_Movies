@@ -5,11 +5,14 @@
     {% if error_message %}
     <h1 class="text-center">{{error_message}}</h1>
     {% endif %}
-    <div class="jumbotron text-center">
+    <div class="col text-center mt-3 mb-3">
+    <a class="btn btn-primary" href="/" role="button">Back to Search</a>
+    </div>
+    <div class="jumbotron text-center pb-5 shadow ml-5 mr-5" style="background-image: url('../static/movie_curtain.jpeg'); background-size: contain;">
         {% if result.belongs_to_collection.backdrop_path %}
-        <img src="https://image.tmdb.org/t/p/w500/{{result.belongs_to_collection.backdrop_path}}" alt="movie backdrop" class="img-fluid mr-auto">
+        <img src="https://image.tmdb.org/t/p/w500/{{result.belongs_to_collection.backdrop_path}}" alt="movie backdrop" class="img-fluid mr-auto shadow">
         {% else %}
-        <img src="{{url_for('static', filename='no_image.jpg')}}"alt="Image Replacement">
+        <img src="https://image.tmdb.org/t/p/w500/{{result.poster_path}}"alt="Image Replacement" style="max-height : 350px;" class="shadow">
         {% endif %}
     </div>
     <div class="container">
@@ -24,18 +27,18 @@
               <p class="card-text">{{result.overview}}</p>
               <p class="card-text">Released: {{result.release_date}}</p>
               <p class="card-text">Runtime: {{result.runtime}} min.</p>
-              <p class="card-text"><a href="{{result.homepage}}">Movie HomePage</a></p>
+              <p class="card-text"><a href="{{result.homepage}}" class="btn btn-secondary">Movie HomePage</a></p>
             </div>
           </div>
     </div>
-    <form action="/my_collection" method="POST" class="text-center">
+    <form action="/my_collection" method="POST" class="text-center mt-2">
         <input type="hidden" name='movie_title' value='{{result.title}}'>
         <input type="hidden" name='movie_genre' value='{% for genre in result.genres %} {{genre.name}} {% endfor %}'>
         <input type="hidden" name='movie_poster' value="https://image.tmdb.org/t/p/w500/{{result.poster_path}}">
         <input type="hidden" name='movie_description' value="{{result.overview}}">
         <input type="hidden" name='movie_run' value='{{result.runtime}}'>
         <input type="hidden" name='movie_id' value='{{result.id}}'>
-        <input type="submit" value="Add to My Collection" class="text-center">
+        <input type="submit" value="Add to My Collection" class="text-center btn btn-primary">
     </form>
 </main>
 {% else %}

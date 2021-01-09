@@ -1,27 +1,32 @@
 {% extends 'base.html' %}
+{% block homeactive %}active{% endblock homeactive %}
 {% block content %}
 
 <main>
-    <h1>My Movies</h1>
-    <div class="container">
-        <div class="row">
+    <div class="container text-center mt-3">
+        <h1 class="h1">My Movies</h1>
+    </div>
 
-            <form action="/" method="POST">
-                <label for="pick_genre">Search By Genre</label>
-                <select name="pick_genre">
-                    {% for result in results %}
-                    <option value="{{ result.id }}">{{ result.name }}</option>
-                    {% endfor %}
-                </select>
-                <input type="submit" value="Search for Movies!">
-            </form>
-            <p>OR</p>
-            <form action="/" method="POST">
-                <label for="pick_title">Search By Title</label>
-                <input type="text" name="pick_title">
-                <input type="submit" value="Search for Movies!">
-            </form>
-            </section>
+    <div class="container pt-3">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <form action="/" method="POST" class="text-center">
+                    <label for="pick_genre">Search By <b>Genre</b></label>
+                    <select name="pick_genre">
+                        {% for result in results %}
+                        <option value="{{ result.id }}">{{ result.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="Search for Movies!">
+                </form>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <form action="/" method="POST" class="text-center">
+                    <label for="pick_title">Search By <b>Title</b></label>
+                    <input type="text" name="pick_title">
+                    <input type="submit" value="Search for Movies!">
+                </form>
+            </div>
         </div>
     </div>
 </main>
@@ -29,20 +34,23 @@
 {% if movies %}
 <hr />
 <section id="form_results">
-    <div class="container">
-        <div class="row">
+    <div class="container text-center">
+        <div class="row text-center d-flex justify-content-center">
             {% for movie in movies%}
-            <div class="col-lg-2 col-md-2 col-sm-2 card">
+            <div class="col-lg-2 col-md-2 col-sm-2 card m-1">
                 {% if movie.poster_path %}
                 <img src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" alt="Movie Photo Placeholder"
                     class="img-thumbnail img-card-top">
                 {% else %}
-                <img src="{{url_for('static', filename='no_image.jpg')}}"alt="Image Replacement">
+                <img src="{{url_for('static', filename='no_image.jpg')}}" alt="Image Replacement">
                 {% endif %}
-                <div class="card-body">
-                    <p class="card-text">Title: {{ movie.title }}</p>
-                    <p class="card-text">Release Date: {{ movie.release_date }}</p>
-                    <a href="/movie/{{movie.id}}">Details</a>
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <p class="card-text">{{ movie.title }}</p>
+                    </div>
+                    <div>
+                        <a href="/movie/{{movie.id}}" class="btn btn-primary">Details</a>
+                    </div>
                 </div>
             </div>
 

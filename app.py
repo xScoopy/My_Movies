@@ -73,6 +73,9 @@ def home_page():
         }
         return render_template('home.html', **context)
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route('/movie/<movie_id>')
 def movie_details(movie_id):
@@ -128,6 +131,13 @@ def my_collection():
             'movies': result
         }
         return render_template('my_collection.html', **context)
+
+@app.route('/delete/<movie_id>', methods=['POST'])
+def delete_movie(movie_id):
+    db.movies.delete_one({
+        'db_id': movie_id
+    })
+    return redirect(url_for('my_collection'))
 
 
 if __name__ == '__main__':
