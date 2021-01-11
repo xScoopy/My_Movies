@@ -9,7 +9,7 @@
 
     <div class="container pt-3">
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="col-lg-6 col-md-6 col-sm-6">
                 <form action="/" method="POST" class="text-center">
                     <label for="pick_genre">Search By <b>Genre</b></label>
                     <select name="pick_genre">
@@ -17,14 +17,14 @@
                         <option value="{{ result.id }}">{{ result.name }}</option>
                         {% endfor %}
                     </select>
-                    <input type="submit" value="Search for Movies!">
+                    <input type="submit" value="Search for Movies!" class="btn btn-primary">
                 </form>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="col-lg-6 col-md-6 col-sm-6">
                 <form action="/" method="POST" class="text-center">
                     <label for="pick_title">Search By <b>Title</b></label>
                     <input type="text" name="pick_title">
-                    <input type="submit" value="Search for Movies!">
+                    <input type="submit" value="Search for Movies!" class="btn btn-primary">
                 </form>
             </div>
         </div>
