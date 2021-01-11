@@ -20,6 +20,7 @@ MOVIE_URL = f'https://api.themoviedb.org/3/discover/movie'
 DETAIL_URL = f'https://api.themoviedb.org/3/movie/'
 SEARCH_URL = f'https://api.themoviedb.org/3/search/movie'
 ACTOR_URL = f'https://api.themoviedb.org/3/search/people'
+UPCOMING_URL = f'https://api.themoviedb.org/3/movie/upcoming'
 
 pp = PrettyPrinter(indent=4)
 MONGODB_PASSWORD = os.getenv('MONGODB_PASSWORD')
@@ -70,8 +71,18 @@ def home_page():
         response = requests.get(GENRE_URL)
         result = json.loads(response.content).get('genres')
         # pp.pprint(result)
+        upcoming_response = requests.get(UPCOMING_URL, 
+        {
+            'api_key':API_KEY,
+            'language':'en-us',
+            'page': 1,
+            'region' : 'US'
+        })
+        upcoming_result = json.loads(upcoming_response.content).get('results')
+        #pp.pprint(upcoming_result)
         context = {
-            'results': result
+            'results': result,
+            'upcoming' : upcoming_result
         }
         return render_template('home.html', **context)
 
