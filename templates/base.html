@@ -4,14 +4,17 @@
 <head>
     <title>My Movies</title>
     <link rel="stylesheet" href="/static/bootstraptemplate.min.css">
+    <script src="https://kit.fontawesome.com/26490581bf.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
     <div class="container text-center align-center">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs bg-dark">
             <li class="nav-item"><a href="/" class="nav-link {% block homeactive %}{% endblock %}">Home</a></li>
             <li class="nav-item"><a href="/about" class="nav-link {% block aboutactive %}{% endblock %}">About</a></li>
-            <li class="nav-item"><a href="/my_collection" class="nav-link {% block collectionactive %}{% endblock %}">My Collection</a></li>
+            <li class="nav-item"><a href="/my_collection" class="nav-link {% block collectionactive %}{% endblock %}">My
+                    Collection</a></li>
         </ul>
     </div>
 
@@ -21,12 +24,27 @@
 
     {% block content %}{% endblock %}
 
-
-    <footer>
-        <div>
-
+    <footer class="mt-3">
+        <div class="container-fluid bg-dark text-light">
+            <div class="row">
+                <div class="col-sm-4 p-3 text-right">
+                    <a href="https://github.com/xScoopy" class="text-light"><i
+                            class="fab fa-github-square fa-3x"></i></a>
+                </div>
+                <div class="col-sm-4 p-3 text-center">
+                    <a href="https://www.linkedin.com/in/jeremiah-leary-31b76ba3/" class="text-light"><i
+                            class="fab fa-linkedin fa-3x"></i></a>
+                </div>
+                <div class="col-sm-4 p-3 text-left align-self-center">
+                    <p class="text-light">&copy;2020 xScoopy</p>
+                </div>
+            </div>
+            <div class="text-center">
+                <p><em>Movie data courtesy of <a href="https://themoviedb.org">TMDB</a></em></p>
+            </div>
         </div>
     </footer>
+
 
     <script src="/static/index.js"></script>
     <!-- JavaScript Bundle with Popper -->
