@@ -19,6 +19,8 @@ GENRE_URL = f'https://api.themoviedb.org/3/genre/movie/list?api_key={API_KEY}&la
 MOVIE_URL = f'https://api.themoviedb.org/3/discover/movie'
 DETAIL_URL = f'https://api.themoviedb.org/3/movie/'
 SEARCH_URL = f'https://api.themoviedb.org/3/search/movie'
+ACTOR_URL = f'https://api.themoviedb.org/3/search/people'
+
 pp = PrettyPrinter(indent=4)
 MONGODB_PASSWORD = os.getenv('MONGODB_PASSWORD')
 # Mongo Connection

@@ -8,4 +8,11 @@ Friday
     view all on load of page. 
     
 -delete items from collection
+    -need to add a button to each movie in the my_collection
     -
+
+
+add actor search functionality
+    -create form/submit button
+    -write python to check if name matches exactly
+    -d
