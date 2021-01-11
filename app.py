@@ -23,11 +23,12 @@ ACTOR_URL = f'https://api.themoviedb.org/3/search/people'
 UPCOMING_URL = f'https://api.themoviedb.org/3/movie/upcoming'
 
 pp = PrettyPrinter(indent=4)
+MONGODB_USERNAME = os.getenv('MONGODB_USERNAME')
 MONGODB_PASSWORD = os.getenv('MONGODB_PASSWORD')
-# Mongo Connection
+# Mongo Connection(Replace if running your own instance)
 
 client = MongoClient(
-    f"mongodb+srv://scoopy:{MONGODB_PASSWORD}@webcluster.jdw9h.mongodb.net/mydb?retryWrites=true&w=majority")
+    f"mongodb+srv://{MONGODB_USERNAME}:{MONGODB_PASSWORD}@webcluster.jdw9h.mongodb.net/mydb?retryWrites=true&w=majority")
 db = client.test
 # print(client.server_info())
 
