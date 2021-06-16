@@ -1,12 +1,13 @@
-from flask import Flask, request, redirect, render_template, url_for
-from flask_pymongo import PyMongo
-from bson.objectid import ObjectId
-from pymongo import MongoClient
-from pprint import PrettyPrinter
-from dotenv import load_dotenv
 import json
 import os
+from pprint import PrettyPrinter
+
 import requests
+from bson.objectid import ObjectId
+from dotenv import load_dotenv
+from flask import Flask, redirect, render_template, request, url_for
+from flask_pymongo import PyMongo
+from pymongo import MongoClient
 
 # API setup
 
@@ -14,13 +15,14 @@ app = Flask(__name__)
 
 # Get the API key from the '.env' file
 load_dotenv()
+BASE_URL = 'https://api.themoviedb.org/3/'
 API_KEY = os.getenv('API_KEY')
-GENRE_URL = f'https://api.themoviedb.org/3/genre/movie/list?api_key={API_KEY}&language=en-US'
-MOVIE_URL = f'https://api.themoviedb.org/3/discover/movie'
-DETAIL_URL = f'https://api.themoviedb.org/3/movie/'
-SEARCH_URL = f'https://api.themoviedb.org/3/search/movie'
-ACTOR_URL = f'https://api.themoviedb.org/3/search/people'
-UPCOMING_URL = f'https://api.themoviedb.org/3/movie/upcoming'
+GENRE_URL = f'{BASE_URL}genre/movie/list?api_key={API_KEY}&language=en-US'
+MOVIE_URL = f'{BASE_URL}discover/movie'
+DETAIL_URL = f'{BASE_URL}movie/'
+SEARCH_URL = f'{BASE_URL}search/movie'
+ACTOR_URL = f'{BASE_URL}people'
+UPCOMING_URL = f'{BASE_URL}movie/upcoming'
 
 pp = PrettyPrinter(indent=4)
 MONGODB_USERNAME = os.getenv('MONGODB_USERNAME')
