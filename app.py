@@ -3,10 +3,8 @@ import os
 from pprint import PrettyPrinter
 
 import requests
-from bson.objectid import ObjectId
 from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, request, url_for
-from flask_pymongo import PyMongo
 from pymongo import MongoClient
 
 # API setup
