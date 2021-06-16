@@ -15,8 +15,10 @@ app = Flask(__name__)
 
 # Get the API key from the '.env' file
 load_dotenv()
-BASE_URL = 'https://api.themoviedb.org/3/'
 API_KEY = os.getenv('API_KEY')
+
+# API endpoints required in application
+BASE_URL = 'https://api.themoviedb.org/3/'
 GENRE_URL = f'{BASE_URL}genre/movie/list?api_key={API_KEY}&language=en-US'
 MOVIE_URL = f'{BASE_URL}discover/movie'
 DETAIL_URL = f'{BASE_URL}movie/'
@@ -24,15 +26,15 @@ SEARCH_URL = f'{BASE_URL}search/movie'
 ACTOR_URL = f'{BASE_URL}people'
 UPCOMING_URL = f'{BASE_URL}movie/upcoming'
 
+#initialization of PrettyPrinter for troubleshooting
 pp = PrettyPrinter(indent=4)
+
+# Mongo Connection(Replace if running your own mongo cluster or local mongodb)
 MONGODB_USERNAME = os.getenv('MONGODB_USERNAME')
 MONGODB_PASSWORD = os.getenv('MONGODB_PASSWORD')
-# Mongo Connection(Replace if running your own instance)
-
 client = MongoClient(
     f"mongodb+srv://{MONGODB_USERNAME}:{MONGODB_PASSWORD}@webcluster.jdw9h.mongodb.net/mydb?retryWrites=true&w=majority")
 db = client.test
-# print(client.server_info())
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -43,6 +45,7 @@ def home_page():
         title = request.form.get('pick_title')
         genre_response = requests.get(GENRE_URL)
         genre_result = json.loads(genre_response.content).get('genres')
+        # if a user selects a genre and not a custom title into the form
         if not title:
             response = requests.get(MOVIE_URL,
                                     {
@@ -52,12 +55,12 @@ def home_page():
                                     }
                                     )
             result = json.loads(response.content).get('results')
-            # pp.pprint(result)
             context = {
                 'movies': result,
                 'results': genre_result
             }
             return render_template('home.html', **context, )
+        #If a user enters a custom title and NOT a dropdown genre
         else:
             response = requests.get(SEARCH_URL,
                                     {
@@ -70,6 +73,7 @@ def home_page():
                 'results': genre_result
             }
             return render_template('home.html', **context)
+    #If homepage is loaded without a form submission, shows upcoming films
     else:
         response = requests.get(GENRE_URL)
         result = json.loads(response.content).get('genres')
