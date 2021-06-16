@@ -34,60 +34,61 @@ client = MongoClient(
     f"mongodb+srv://{MONGODB_USERNAME}:{MONGODB_PASSWORD}@webcluster.jdw9h.mongodb.net/mydb?retryWrites=true&w=majority")
 db = client.test
 
-
-@app.route('/', methods=['GET', 'POST'])
-def home_page():
-    """Shows a form to search for movies, then shows results beneath the form."""
-    if request.method == 'POST':
-        genre = request.form.get('pick_genre')
-        title = request.form.get('pick_title')
-        genre_response = requests.get(GENRE_URL)
-        genre_result = json.loads(genre_response.content).get('genres')
-        # if a user selects a genre and not a custom title into the form
-        if not title:
-            response = requests.get(MOVIE_URL,
-                                    {
-                                        'api_key': API_KEY,
-                                        'with_genres': genre
-
-                                    }
-                                    )
-            result = json.loads(response.content).get('results')
-            context = {
-                'movies': result,
-                'results': genre_result
-            }
-            return render_template('home.html', **context, )
-        #If a user enters a custom title and NOT a dropdown genre
-        else:
-            response = requests.get(SEARCH_URL,
-                                    {
-                                        'api_key': API_KEY,
-                                        'query': title
-                                    })
-            result = json.loads(response.content).get('results')
-            context = {
-                'movies': result,
-                'results': genre_result
-            }
-            return render_template('home.html', **context)
+@app.route('/', methods=['GET'])
+def home_get():
     #If homepage is loaded without a form submission, shows upcoming films
-    else:
-        response = requests.get(GENRE_URL)
-        result = json.loads(response.content).get('genres')
-        upcoming_response = requests.get(UPCOMING_URL, 
-        {
-            'api_key':API_KEY,
-            'language':'en-us',
-            'page': 1,
-            'region' : 'US'
-        })
-        upcoming_result = json.loads(upcoming_response.content).get('results')
+    response = requests.get(GENRE_URL)
+    result = json.loads(response.content).get('genres')
+    upcoming_response = requests.get(UPCOMING_URL, 
+    {
+        'api_key':API_KEY,
+        'language':'en-us',
+        'page': 1,
+        'region' : 'US'
+    })
+    upcoming_result = json.loads(upcoming_response.content).get('results')
+    context = {
+        'results': result,
+        'upcoming' : upcoming_result
+    }
+    return render_template('home.html', **context)
+
+@app.route('/', methods=['POST'])
+def home_post():
+    """Shows a form to search for movies, then shows results beneath the form."""
+    genre = request.form.get('pick_genre')
+    title = request.form.get('pick_title')
+    genre_response = requests.get(GENRE_URL)
+    genre_result = json.loads(genre_response.content).get('genres')
+    # if a user selects a genre and not a custom title into the form
+    if not title:
+        response = requests.get(MOVIE_URL,
+                                {
+                                    'api_key': API_KEY,
+                                    'with_genres': genre
+
+                                }
+                                )
+        result = json.loads(response.content).get('results')
         context = {
-            'results': result,
-            'upcoming' : upcoming_result
+            'movies': result,
+            'results': genre_result
+        }
+        return render_template('home.html', **context, )
+    #If a user enters a custom title and NOT a dropdown genre
+    else:
+        response = requests.get(SEARCH_URL,
+                                {
+                                    'api_key': API_KEY,
+                                    'query': title
+                                })
+        result = json.loads(response.content).get('results')
+        context = {
+            'movies': result,
+            'results': genre_result
         }
         return render_template('home.html', **context)
+
 
 @app.route('/about')
 def about():
