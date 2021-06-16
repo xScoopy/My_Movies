@@ -77,7 +77,6 @@ def home_page():
     else:
         response = requests.get(GENRE_URL)
         result = json.loads(response.content).get('genres')
-        # pp.pprint(result)
         upcoming_response = requests.get(UPCOMING_URL, 
         {
             'api_key':API_KEY,
