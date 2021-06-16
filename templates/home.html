@@ -60,35 +60,7 @@
     </div>
 </section>
 {% else %}
-<section id="upcoming_form_results">
-    <div class="container text-center">
-        <h3 class='text-center mt-5'>Films coming soon!</h2>
-        <div class="row text-center d-flex justify-content-center">
-            {% for result in upcoming%}
-            <div class="col-lg-4 col-md-4 col-sm-4 card m-1">
-                {% if result.poster_path %}
-                <img src="https://image.tmdb.org/t/p/w500/{{result.poster_path}}" alt="Movie Photo Placeholder"
-                    class="img-thumbnail img-card-top">
-                {% else %}
-                <img src="{{url_for('static', filename='no_image.jpg')}}" alt="Image Replacement">
-                {% endif %}
-                <div class="card-body d-flex flex-column justify-content-between">
-                    <div>
-                        <p class="lead card-text">{{ result.title }}</p>
-                    </div>
-                    <div>
-                        <p class="card-text">{{ result.release_date }}</p>
-                    </div>
-                    <div>
-                        <p class = card-text">{{ result.overview }}</p>
-                    </div>
-                </div>
-            </div>
-
-            {% endfor %}
-        </div>
-    </div>
-</section>
+{% include 'upcoming.html' %}
 {% endif %}
 
 {% endblock content %}
