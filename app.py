@@ -86,7 +86,6 @@ def home_page():
             'region' : 'US'
         })
         upcoming_result = json.loads(upcoming_response.content).get('results')
-        #pp.pprint(upcoming_result)
         context = {
             'results': result,
             'upcoming' : upcoming_result
