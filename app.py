@@ -114,6 +114,7 @@ def movie_details(movie_id):
 @app.route('/my_collection', methods=['GET', 'POST'])
 def my_collection():
     '''Add a movie to the database on POST, or show all movies in db on GET'''
+    #if POST request, add movie to the db
     if request.method == 'POST':
         movie_id = request.form.get('movie_id')
         new_movie = {
@@ -124,7 +125,9 @@ def my_collection():
             'runtime': request.form.get('movie_run'),
             'description': request.form.get('movie_description')
         }
+        #Check's if the movie being added already exists in the database
         check_movie = db.movies.find_one({'db_id': movie_id})
+        #If it doesn't already exist, add it, otherwise return an error message and redirect to their previous search results.
         if not check_movie:
             db.movies.insert_one(new_movie)
             result = db.movies.find()
@@ -144,6 +147,7 @@ def my_collection():
                         'result' : result
                         }
             return render_template('movie.html', **context, movie_id=movie_id)
+    #If a GET request is made, just find all movies in the db and send them to the template for rendering
     else: 
         result = db.movies.find()
         context = {
@@ -153,6 +157,7 @@ def my_collection():
 
 @app.route('/delete/<movie_id>', methods=['POST'])
 def delete_movie(movie_id):
+    '''Deletes a movie from the user's collection (will not remove it from the TMDB database)'''
     db.movies.delete_one({
         'db_id': movie_id
     })
