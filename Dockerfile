@@ -8,7 +8,7 @@
 FROM python:3.7-slim-buster
 
 # STEP 2: Install required dependencies.
-RUN pip install Flask certifi chardet click dnspython Flask-PyMongo gunicorn idna itsdangerous Jinja2 MarkupSafe Pygments prettyprinter pymongo python-dateutil python-dotenv requests six urllib3 Werkzeug
+RUN pip install Flask certifi chardet click dnspython Flask-PyMongo gunicorn idna itsdangerous Jinja2 MarkupSafe prettyprinter pymongo python-dateutil python-dotenv requests six Werkzeug
 
 # STEP 3: Copy the source code in the current directory to the container.
 # Store it in a folder named /app.
@@ -20,9 +20,6 @@ WORKDIR /app
 # STEP 5: Declare environment variables
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=development
-ENV MONGODB_USERNAME=scoopy
-ENV MONGODB_PASSWORD=scoopypassword
-ENV API_KEY=8e6bd6f19f35e323df4ce35863360be0
 
 # STEP 6: Expose the port that Flask is running on
 EXPOSE 5000
