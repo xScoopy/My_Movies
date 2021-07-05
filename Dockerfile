@@ -20,7 +20,9 @@ WORKDIR /app
 # STEP 5: Declare environment variables
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=development
-
+ENV MONGODB_USERNAME=scoopy
+ENV MONGODB_PASSWORD=scoopypassword
+ENV API_KEY=8e6bd6f19f35e323df4ce35863360be0
 # STEP 6: Expose the port that Flask is running on
 EXPOSE 5000
 
