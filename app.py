@@ -17,6 +17,8 @@ API_KEY = os.getenv('API_KEY')
 
 # API endpoints required in application
 BASE_URL = 'https://api.themoviedb.org/3/'
+
+#REFACTOR GENRE
 GENRE_URL = f'{BASE_URL}genre/movie/list?api_key={API_KEY}&language=en-US'
 MOVIE_URL = f'{BASE_URL}discover/movie'
 DETAIL_URL = f'{BASE_URL}movie/'
@@ -63,12 +65,11 @@ def home_post():
     # if a user selects a genre and not a custom title into the form
     if not title:
         response = requests.get(MOVIE_URL,
-                                {
-                                    'api_key': API_KEY,
-                                    'with_genres': genre
-
-                                }
-                                )
+            {
+                'api_key': API_KEY,
+                'with_genres': genre
+            }
+        )
         result = json.loads(response.content).get('results')
         context = {
             'movies': result,
@@ -78,10 +79,10 @@ def home_post():
     #If a user enters a custom title and NOT a dropdown genre
     else:
         response = requests.get(SEARCH_URL,
-                                {
-                                    'api_key': API_KEY,
-                                    'query': title
-                                })
+            {
+                'api_key': API_KEY,
+                'query': title
+            })
         result = json.loads(response.content).get('results')
         context = {
             'movies': result,
