@@ -1,6 +1,5 @@
 ![Docker Automated build](https://img.shields.io/docker/automated/jleary070/my-movies?style=for-the-badge) 
-https://img.shields.io/docker/image-size/jleary070/my-movies?style=for-the-badge
-
+![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/jleary070/my-movies?sort=date&style=for-the-badge)
 # MYMDB
 Web-app designed to assist with transforming a stack of physical DvD's into a visual collection. 
 
