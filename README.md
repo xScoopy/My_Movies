@@ -2,7 +2,7 @@
 Web-app designed to assist with transforming a stack of physical DvD's into a visual collection. 
 
 ## How to use - basic
-Currently hosted on Heroku here:
+Currently hosted on CapRover/Docker VPS here: https://my-movies.dev.jleary.me
 
 Single MongoDB Atlas cluster in use, shared among users at present. 
 
