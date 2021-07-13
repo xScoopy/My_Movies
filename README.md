@@ -8,6 +8,16 @@ Currently hosted on CapRover/Docker VPS here: https://my-movies.dev.jleary.me
 
 Single MongoDB Atlas cluster in use, shared among users at present. 
 
+## How to use - intermediate
+Pull docker image 'jleary070/my-movies' from docker hub
+
+run docker container using the pulled image. 
+
+navigate to localhost:5000 to view webpage after container is running. 
+
+modify dockerfile's port to use a port desired other than 5000
+
+
 ## How to use - advanced
 ### Pre-requisites:
 - API Key from themoviedb.org
